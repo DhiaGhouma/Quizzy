@@ -1,4 +1,5 @@
-# Quizzy 🎯
+
+![unnamed](https://github.com/user-attachments/assets/26850343-1e39-4082-b134-0f496458932c)
 
 **Quizzy** is a fun, modern, and gamified real-time quiz platform built with **React**, **TypeScript**, **Tailwind CSS**, **Node.js**, and **MongoDB**. Battle friends, explore quizzes, earn XP, collect badges, and level up in a playful interactive environment. The platform also leverages **AI and Machine Learning** for personalized quiz recommendations and matchmaking.
 
