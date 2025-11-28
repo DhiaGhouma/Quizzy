@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../state/appContext";
-import { Question } from "../types";
+import type { Question } from "../types";
 
 const sampleQuestions: Question[] = [
     { q: "What is the capital of France?", options: ["London", "Berlin", "Paris", "Madrid"], correct: 2 },
@@ -23,12 +23,16 @@ const Game: React.FC = () => {
 
     if (gameState.finished) {
         return (
-            <div className="min-h-screen p-8 flex items-center justify-center">
+            <div className="min-h-screen p-8 flex items-center justify-center animate-fade-in">
                 <div className="max-w-xl text-center">
-                    <h2 className="text-3xl font-bold mb-4">Quiz Complete</h2>
-                    <div className="text-6xl font-extrabold mb-4">{gameState.score}</div>
-                    <div className="mb-6">Earned {gameState.score} XP</div>
-                    <button onClick={() => navigate("/room")} className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-cyan-500">Back to room</button>
+                    <div className="card animate-scale-in">
+                        <h2 className="text-4xl font-bold mb-6 gradient-text">🎉 Quiz Complete!</h2>
+                        <div className="text-7xl font-extrabold mb-4 gradient-text animate-pulse-slow">{gameState.score}</div>
+                        <div className="text-xl mb-8" style={{ color: 'var(--color-muted)' }}>You earned {gameState.score} XP</div>
+                        <button onClick={() => navigate("/room")} className="btn btn-primary btn-lg">
+                            Back to Room
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -102,35 +106,45 @@ const Game: React.FC = () => {
     }, [gameState, setGameState, user, setUser]);
 
     return (
-        <div className="min-h-screen p-8">
-            <div className="max-w-3xl mx-auto">
-                <div className="flex justify-between items-center mb-6">
-                    <div>Question {gameState.currentQuestion + 1}/{sampleQuestions.length}</div>
-                    <div>Time: {gameState.timeLeft}s</div>
-                    <div>Score: {gameState.score}</div>
+        <div className="min-h-screen p-8 animate-fade-in">
+            <div className="container max-w-3xl">
+                <div className="flex justify-between items-center mb-6 animate-slide-up">
+                    <span className="badge badge-outline">Question {gameState.currentQuestion + 1}/{sampleQuestions.length}</span>
+                    <span className={`badge ${gameState.timeLeft <= 5 ? 'badge-danger' : 'badge-success'}`}>⏱️ {gameState.timeLeft}s</span>
+                    <span className="badge" style={{ background: 'var(--color-accent)', color: 'var(--color-bg)' }}>🏆 {gameState.score}</span>
                 </div>
 
-                <div className="bg-white/5 p-8 rounded-2xl mb-6">
-                    <h3 className="text-2xl font-bold mb-6">{question.q}</h3>
+                <div className="card animate-scale-in mb-6">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-8">{question.q}</h3>
 
                     <div className="grid grid-cols-1 gap-4">
                         {question.options.map((opt, i) => {
-                            let classes = "p-4 rounded-lg text-left bg-white/3";
+                            let classes = "btn text-left p-5 justify-start glass";
                             if (gameState.answered) {
-                                if (i === question.correct) classes = "p-4 rounded-lg text-left bg-green-600/30";
-                                else if (i === gameState.selectedAnswer) classes = "p-4 rounded-lg text-left bg-red-600/30";
+                                if (i === question.correct) {
+                                    classes = "btn text-left p-5 justify-start";
+                                    classes += " bg-green-600/40 border-2 border-green-400";
+                                } else if (i === gameState.selectedAnswer) {
+                                    classes = "btn text-left p-5 justify-start";
+                                    classes += " bg-red-600/40 border-2 border-red-400";
+                                }
                             }
                             return (
-                                <button key={i} disabled={gameState.answered} className={classes} onClick={() => answer(i)}>
-                                    {opt}
+                                <button
+                                    key={i}
+                                    disabled={gameState.answered}
+                                    className={classes}
+                                    onClick={() => answer(i)}
+                                >
+                                    <span className="font-semibold">{opt}</span>
                                 </button>
                             );
                         })}
                     </div>
                 </div>
 
-                <div className="w-full h-2 bg-white/5 rounded-full">
-                    <div className="h-full rounded-full bg-gradient-to-r from-purple-600 to-cyan-500" style={{ width: `${progress}%` }} />
+                <div className="progress-bar">
+                    <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
                 </div>
             </div>
         </div>

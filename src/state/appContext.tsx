@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { User, Player, Quiz, Room, GameState, Lang } from "../types";
+import type { User, Player, Quiz, Room, GameState, Lang } from "../types";
 
 interface AppState {
     lang: Lang;

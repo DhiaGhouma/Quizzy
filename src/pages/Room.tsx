@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Copy, QrCode, Crown } from "lucide-react";
+import { Copy, QrCode, Crown, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../state/appContext";
-import { Quiz } from "../types";
+import type { Quiz } from "../types";
 
 const sampleQuizzes: Quiz[] = [
     { id: 1, title: "Pop Culture", color: "#FF6B9D", questions: 10, players: 247 },
@@ -26,7 +26,6 @@ const Room: React.FC = () => {
     }
 
     const startQuiz = (quiz: Quiz) => {
-        // create a lightweight GameState and navigate
         setGameState({
             quiz,
             currentQuestion: 0,
@@ -34,67 +33,88 @@ const Room: React.FC = () => {
             timeLeft: 15,
             answered: false,
         } as any);
-        // attach quiz to room
         setRoom({ ...room, quiz });
         navigate("/game");
     };
 
     return (
-        <div className="min-h-screen p-8">
-            <div className="max-w-6xl mx-auto">
-                <header className="flex justify-between items-center mb-8">
+        <div className="min-h-screen p-8 animate-fade-in">
+            <div className="container">
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 animate-slide-up">
                     <div>
-                        <h3 className="text-2xl font-bold">Room Code</h3>
-                        <div className="flex items-center gap-3 mt-2">
-                            <div className="font-mono bg-white/5 px-4 py-2 rounded-lg">{room.code}</div>
-                            <button onClick={() => navigator.clipboard.writeText(room.code)} className="p-2 bg-white/5 rounded-md">
-                                <Copy />
+                        <h3 className="text-3xl font-bold mb-2">Room Lobby</h3>
+                        <div className="flex items-center gap-3">
+                            <div className="glass font-mono px-5 py-3 rounded-xl text-2xl font-bold tracking-wider">{room.code}</div>
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(room.code);
+                                    alert('Room code copied!');
+                                }}
+                                className="btn btn-sm glass"
+                                title="Copy room code"
+                            >
+                                <Copy size={18} />
                             </button>
                         </div>
                     </div>
 
                     <div>
-                        <button onClick={() => setShowQR(v => !v)} className="px-4 py-2 bg-white/5 rounded-lg flex items-center gap-2">
-                            <QrCode /> QR
+                        <button onClick={() => setShowQR(v => !v)} className="btn btn-secondary flex items-center gap-2">
+                            <QrCode size={20} /> {showQR ? 'Hide QR' : 'Show QR'}
                         </button>
                     </div>
                 </header>
 
                 {showQR && (
-                    <div className="mb-6 p-6 bg-white/5 rounded-lg">
-                        <div className="mb-2">QR placeholder</div>
-                        <div className="font-mono py-2">{room.code}</div>
+                    <div className="card mb-8 text-center animate-scale-in">
+                        <div className="mb-3 text-lg font-semibold">Scan to Join</div>
+                        <div className="inline-block p-6 glass rounded-xl">
+                            <div className="text-sm mb-2" style={{ color: 'var(--color-muted)' }}>QR Code Placeholder</div>
+                            <div className="font-mono text-xl font-bold">{room.code}</div>
+                        </div>
                     </div>
                 )}
 
                 <div className="grid lg:grid-cols-2 gap-8">
-                    <div>
-                        <h4 className="text-lg font-semibold mb-4">Players ({players.length})</h4>
+                    <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
+                        <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <Users size={24} />
+                            Players ({players.length})
+                        </h4>
                         <div className="space-y-3">
                             {players.map((p, i) => (
-                                <div key={i} className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-                                    <div className="w-12 h-12 bg-white/6 rounded-lg flex items-center justify-center font-bold">{p.avatar || p.name.charAt(0)}</div>
+                                <div key={i} className="card flex items-center gap-4">
+                                    <div className="avatar">{p.avatar || p.name.charAt(0)}</div>
                                     <div className="flex-1">
-                                        <div className="font-semibold">{p.name}</div>
-                                        <div className="text-sm text-gray-300">Level {p.level}</div>
+                                        <div className="font-bold text-lg">{p.name}</div>
+                                        <div className="text-sm" style={{ color: 'var(--color-muted)' }}>Level {p.level}</div>
                                     </div>
-                                    {i === 0 && <Crown />}
+                                    {i === 0 && (
+                                        <div className="flex items-center gap-2">
+                                            <Crown size={20} style={{ color: 'var(--color-accent)' }} />
+                                            <span className="badge badge-warning">Host</span>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    <div>
-                        <h4 className="text-lg font-semibold mb-4">Categories</h4>
-                        <div className="grid grid-cols-1 gap-3">
+                    <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                        <h4 className="text-xl font-bold mb-4">Select Quiz Category</h4>
+                        <div className="grid grid-cols-1 gap-4">
                             {sampleQuizzes.map(q => (
-                                <button key={q.id} onClick={() => startQuiz(q)} className="p-4 text-left rounded-lg bg-white/5">
+                                <button
+                                    key={q.id}
+                                    onClick={() => startQuiz(q)}
+                                    className="card-dark card card-interactive text-left"
+                                >
                                     <div className="flex justify-between items-center">
                                         <div>
-                                            <div className="font-bold">{q.title}</div>
-                                            <div className="text-sm text-gray-300">{q.questions} questions</div>
+                                            <div className="font-bold text-lg mb-1">{q.title}</div>
+                                            <div className="text-sm" style={{ color: 'var(--color-muted)' }}>{q.questions} questions</div>
                                         </div>
-                                        <div className="text-sm text-gray-300">{q.players} players</div>
+                                        <span className="badge">{q.players} playing</span>
                                     </div>
                                 </button>
                             ))}
