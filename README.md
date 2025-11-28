@@ -1,73 +1,99 @@
-# React + TypeScript + Vite
+# Quizzy 🎯
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Quizzy** is a fun, modern, and gamified real-time quiz platform built with **React**, **TypeScript**, **Tailwind CSS**, **Node.js**, and **MongoDB**. Battle friends, explore quizzes, earn XP, collect badges, and level up in a playful interactive environment. The platform also leverages **AI and Machine Learning** for personalized quiz recommendations and matchmaking.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Landing Page:** Hero section with playful illustration, multilingual support (EN, FR, AR), and animated CTAs.  
+- **User Setup:** Pick a name and avatar before joining or creating a quiz room.  
+- **Rooms & Multiplayer:** Create or join quiz rooms, share QR codes or room codes.  
+- **Real-Time Game:** Timed questions, animated XP/progress bars, score tracking.  
+- **Gamified UI:** Rounded cards, gradient buttons, hover animations, badges, confetti effects on quiz completion.  
+- **AI/ML Recommendations:** Personalized quizzes and mentor/peer matchmaking based on skills, interests, and past performance.  
+- **Responsive & RTL Support:** Works on desktop, tablet, and mobile; supports right-to-left languages (Arabic).  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React 18 + TypeScript, Tailwind CSS, React Router, Lucide Icons  
+- **Backend:** Node.js + Express  
+- **Database:** MongoDB  
+- **AI / ML:** Python or Node.js ML libraries for personalized quiz recommendations and scoring analytics  
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/quizzy.git
+cd quizzy
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Install frontend dependencies
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Run frontend
+npm start
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Backend setup
+cd server
+npm install
+npm run dev
+Open http://localhost:5173
+ 
+ - to view the frontend in your browser. The backend runs on http://localhost:5000 by default.
+
+#Folder Structure
+
+frontend/
+├─ src/
+│  ├─ components/    # UI components (Cards, Buttons, Avatar, Badges)
+│  ├─ pages/         # Landing, Setup, Room, Game
+│  ├─ routes/        # React Router configuration
+│  ├─ assets/        # Illustrations, icons
+│  └─ App.tsx
+
+backend/
+├─ server/
+│  ├─ models/        # MongoDB schemas for User, Quiz, Scores
+│  ├─ routes/        # API endpoints
+│  ├─ controllers/   # Request logic
+│  ├─ ai/            # ML scripts for recommendations
+│  └─ server.js
+
+UI / UX Highlights
+
+Colors & Gradients: Blue → Purple for energy, Orange for highlights
+
+Typography: Primary: Poppins, Secondary: Roboto
+
+Animations: Hover glow, badge bounce, confetti on level-up
+
+Cards: Quizzes, rooms, and badges with soft shadows and playful micro-interactions
+
+Progress Bars: Animated XP bars with smooth gradient fill
+
+Multilingual Support
+
+Languages supported:
+
+English (EN)
+
+French (FR)
+
+Arabic (AR, RTL)
+
+Switch via buttons on the landing page.
+
+To-Do / Future Enhancements
+
+Full real-time multiplayer using WebSockets
+
+Persistent leaderboards and user authentication
+
+Advanced AI/ML features for recommendations and scoring analytics
+
+Sound effects, confetti, and playful animations for engagement
