@@ -43,3 +43,43 @@ export interface GameState {
     selectedAnswer?: number | null;
     finished?: boolean;
 }
+
+// Achievement system
+export interface Achievement {
+    id: string;
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+    unlocked: boolean;
+    unlockedAt?: Date;
+    progress?: number;
+    maxProgress?: number;
+    category: "beginner" | "expert" | "social" | "speed" | "master";
+}
+
+// Game history
+export interface GameHistory {
+    id: string;
+    date: Date;
+    quiz: Quiz;
+    score: number;
+    totalQuestions: number;
+    timeSpent: number;
+    rank: number;
+    totalPlayers: number;
+    xpEarned: number;
+}
+
+// Enhanced user stats
+export interface UserStats {
+    totalGames: number;
+    totalWins: number;
+    totalXP: number;
+    averageScore: number;
+    bestScore: number;
+    totalTimeSpent: number;
+    favoriteCategory?: string;
+    winStreak: number;
+    currentStreak: number;
+}

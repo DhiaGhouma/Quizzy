@@ -100,8 +100,8 @@ const Landing: React.FC = () => {
                                 key={l}
                                 onClick={() => setLang(l)}
                                 className={`px-3 md:px-6 py-2 md:py-3 rounded-xl transition-all duration-300 font-black text-sm md:text-base relative overflow-hidden ${lang === l
-                                        ? "text-white"
-                                        : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white hover:scale-105"
+                                    ? "text-white"
+                                    : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white hover:scale-105"
                                     }`}
                                 style={{
                                     animationDelay: `${i * 0.1}s`,
